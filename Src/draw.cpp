@@ -12,11 +12,13 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#ifndef NO_GRAPHICS
+#ifndef NO_CAIRO
   #include <librsvg-2.0/librsvg/rsvg.h>
   #include <cairo/cairo.h>
   #include <cairo/cairo-svg.h>
+#ifndef NO_IMAGICK
   #include <Magick++.h>
+#endif
 #endif
 
 namespace MMaze {
