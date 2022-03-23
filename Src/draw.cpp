@@ -68,7 +68,7 @@ static std::size_t index_tuile(const std::vector<int>& t, int ligne, int colonne
 }
 
 void PadPlateau::ajouter_site(
-    int ligne, int colonne, Case c, 
+    int ligne, int colonne, Case c,
     Site site
     ) {
   //index de la tuile dans le tableau
@@ -88,7 +88,7 @@ void PadPlateau::ajouter_tuile(int ligne, int colonne) {
 
   //allocation des murs et des sites, aucun mur et aucun site
   m_murs.resize(m_murs.size() + 24, false) ;
-  m_sites.resize(m_sites.size() + 16, (Site) Site::AUCUN) ;
+  m_sites.resize(m_sites.size() + 16, Site(ligne, colonne)) ;
 }
 
 void PadPlateau::ajouter_mur(int ligne, int colonne, Mur m) {

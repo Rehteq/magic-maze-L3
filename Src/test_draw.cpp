@@ -6,8 +6,8 @@ using namespace MMaze ;
 
 int main() {
   PadPlateau pad ;
-
-  pad.ajouter_tuile(0,0) ;
+  
+  pad.ajouter_tuile(0,0);
   pad.ajouter_boutique(0,0,Case(0)) ;
   pad.ajouter_sortie(0,0, Case(15), Couleur::JAUNE) ;
   pad.ajouter_mur(0,0,Mur(Case(0), Case(1))) ;
@@ -34,6 +34,18 @@ int main() {
   pad.placer_joueur(0,0,Case(6),Couleur::VERT) ;
   pad.placer_joueur(0,0,Case(9),Couleur::VIOLET) ;
   pad.placer_joueur(0,0,Case(10),Couleur::ORANGE) ;
+
+    pad.ajouter_tuile(0,2);
+    pad.ajouter_porte(1,1,Case(2), Couleur::AUCUNE) ;
+    pad.ajouter_porte(1,1,Case(4), Couleur::JAUNE) ;
+
+    pad.ajouter_tuile(0,3);
+    pad.ajouter_porte(1,1,Case(2), Couleur::AUCUNE) ;
+    pad.ajouter_porte(1,1,Case(4), Couleur::JAUNE) ;
+
+    pad.ajouter_tuile(0,4);
+    pad.ajouter_porte(1,1,Case(2), Couleur::AUCUNE) ;
+    pad.ajouter_porte(1,1,Case(4), Couleur::JAUNE) ;
 
 #ifndef NO_CAIRO
   pad.dessiner("/tmp/plateau.svg") ;

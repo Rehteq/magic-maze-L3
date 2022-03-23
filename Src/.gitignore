@@ -1,7 +1,7 @@
 *.o
 *.d
 *.tmp
-.idea
+.idea/
 test_chemin
 test_draw
 test_melangeur

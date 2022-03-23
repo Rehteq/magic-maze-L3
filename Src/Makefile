@@ -24,6 +24,7 @@ SOURCES += site.cpp
 SOURCES += direction.cpp
 SOURCES += console_pad.cpp
 SOURCES += draw.cpp
+SOURCES += tuiles.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
