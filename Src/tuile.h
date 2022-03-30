@@ -21,6 +21,8 @@ namespace MMaze {
         void setType(unsigned int ligne, unsigned colonne, Type type);
         void setMur(Case case1, Case case2, bool isSolid);
         void setMur(int index, bool isSolid);
+        int getCaseCoordinate(int caseNumber);
+        int getWallCoordinate(int caseNumber1, int caseNumber2);
 
         Tuile(int x, int y);
 

@@ -49,5 +49,40 @@ namespace MMaze{
         return vec_sites[index];
     }
 
+    int getCaseCoordinate(int caseNumber){
+        int j = 0;
+        for(int i = 0; i < caseNumber; i+=4){
+            j++;
+        }
+        return j;
+    }
+
+    int getWallCoordinate(int caseNumber1, int caseNumber2){
+        if(caseNumber1 == caseNumber2 
+            || caseNumber1 < 0 
+            || caseNumber2 < 0 
+            || caseNumber1 > 15 
+            || caseNumber2 > 15
+        ){
+            return -1;
+        }
+        int lineC1 = getCaseCoordinate(caseNumber1);
+        int lineC2 = getCaseCoordinate(caseNumber2);
+        if(lineC1 == lineC2){
+            int diff = caseNumber1 - caseNumber2;
+            if(diff*diff != 1){
+                return -1;
+            }
+            else{
+                if(caseNumber1 < caseNumber2){
+                    return 12+lineC1+(caseNumber1*4);
+                }
+                if(caseNumber2 < caseNumber1){
+                    return 12+lineC1+((caseNumber1-1)*4);
+                }
+            }
+        }
+    }
+
 }
 
