@@ -10,17 +10,23 @@
 #include "couleurs.hpp"
 #include "site.hpp"
 namespace MMaze {
-    class Tuiles {
+    class Tuile {
     public :
         int x;
         int y;
         std::vector<Site> vec_sites;
         std::vector<bool> vec_murs;
+
         void setType(unsigned int ligne, unsigned colonne, Type type);
-        Tuiles(int x, int y);
+        void setMur(Case case1, Case case2, bool isSolid);
+        void setMur(int index, bool isSolid);
+
+        Tuile(int x, int y);
 
     private:
-        int getIndex(unsigned int ligne, unsigned colonne);
+        int getCaseIndex(unsigned int ligne, unsigned colonne);
+        int getMurIndex(Case case1, Case case2);
+
     };
 }
 
