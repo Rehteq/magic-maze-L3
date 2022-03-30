@@ -40,5 +40,14 @@ namespace MMaze{
         setMur(index, isSolid);
     }
 
+    Site Tuile::getSite(int ligne, int colonne) {
+        int index = getCaseIndex(ligne, colonne);
+        return getSite(index);
+    }
+
+    Site Tuile::getSite(int index) {
+        return vec_sites[index];
+    }
+
 }
 

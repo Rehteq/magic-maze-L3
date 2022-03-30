@@ -16,7 +16,8 @@ namespace MMaze {
         int y;
         std::vector<Site> vec_sites;
         std::vector<bool> vec_murs;
-
+        Site getSite(int index);
+        Site getSite(int ligne, int colonne);
         void setType(unsigned int ligne, unsigned colonne, Type type);
         void setMur(Case case1, Case case2, bool isSolid);
         void setMur(int index, bool isSolid);
