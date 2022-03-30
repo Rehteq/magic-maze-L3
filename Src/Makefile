@@ -25,6 +25,7 @@ SOURCES += direction.cpp
 SOURCES += console_pad.cpp
 SOURCES += draw.cpp
 SOURCES += tuiles.cpp
+SOURCES += plateau.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
