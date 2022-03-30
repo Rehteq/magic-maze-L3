@@ -82,6 +82,14 @@ namespace MMaze{
                 }
             }
         }
+        if(lineC1!=lineC2){
+            if(caseNumber1 == caseNumber2-4 || caseNumber1 == caseNumber2+4){
+                return (caseNumber1<caseNumber2) ? caseNumber1 : caseNumber2;
+            }
+            else{
+                return -1;
+            }
+        }
     }
 
 }
