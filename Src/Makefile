@@ -25,6 +25,7 @@ SOURCES += direction.cpp
 SOURCES += console_pad.cpp
 SOURCES += tuile.cpp
 SOURCES += plateau.cpp
+SOURCES += generateur.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
