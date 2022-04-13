@@ -4,7 +4,7 @@
 
 #include "tuile.h"
 #include "mur.hpp"
-
+#include <cassert>
 namespace MMaze{
     MMaze::Tuile::Tuile(int y, int x) {
         this->x = x;
