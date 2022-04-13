@@ -9,8 +9,15 @@
 using namespace MMaze;
 class Plateau {
 public:
+    Plateau();
+    void ajouterTuile(Tuile* t);
+
+    Tuile * worldCoordinatesToTuile(int ligne, int colonne);
+    Site * worldCoordinatesToSite(int ligne, int colonne);
+    Tuile * getTuile(int y, int x);
+
 private:
-    std::vector<Tuile> m_tuiles
+    std::vector<Tuile*> vec_tuiles;
 
 };
 

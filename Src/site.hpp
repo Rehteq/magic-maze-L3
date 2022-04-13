@@ -13,12 +13,12 @@ namespace MMaze {
         POINT_DEPART
     };
 
-    class Site : public Case {
+    class Site : Case {
     public:
         Type type;
         Couleur couleur;
         Site(unsigned int li, unsigned int col, Couleur c = Couleur::AUCUNE, Type t = AUCUN);
-        explicit Site(unsigned int index, Couleur c, Type t);
+        Site(unsigned int index, Couleur c, Type t);
     };
 } //end of namespace MMaze
 

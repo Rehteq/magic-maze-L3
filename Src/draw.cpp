@@ -270,12 +270,12 @@ static void dessiner_generique(
 
 #ifndef NO_CAIRO
 
-static double img_x(int ligne, int colonne, Case c) {
-  return 4*colonne - ligne + (int) c.colonne() ;
+static double img_x(int x, int y, Case c) {
+  return 4*y - x + (int) c.y() ;
 }
 
-static double img_y(int ligne, int colonne, Case c) {
-  return 4*ligne + colonne + (int) c.ligne() ;
+static double img_y(int x, int y, Case c) {
+  return 4*x + y + (int) c.x() ;
 }
 
 static void rotate(cairo_t* cr, double cx, double cy, int rotation) {
@@ -366,7 +366,7 @@ void PadPlateau::dessiner(const std::string& fichier, int unit, float margin) {
   //dessin generique
   cairo_surface_t* record = dessiner_cairo(
       "mmaze.svg",
-      m_tuiles,
+      vec_tuiles,
       m_murs,
       m_sites,
       m_tuiles_joueurs,
@@ -450,7 +450,7 @@ std::string PadPlateau::base64_png(int unit, float margin) {
   //dessin generique
   cairo_surface_t* record = dessiner_cairo(
       "mmaze.svg",
-      m_tuiles,
+      vec_tuiles,
       m_murs,
       m_sites,
       m_tuiles_joueurs,
@@ -528,7 +528,7 @@ std::ostream& operator<<(std::ostream& out, const PadPlateau& plateau) {
 
   //dessin d'site
   auto dessiner_site = [lmin, lmax, cmin, cmax, &pad] (drawable elt, int tl, int tc, Case ca, int rot) {
-    //coordonnees tuile -> ligne et colonne dans le pad
+    //coordonnees tuile -> x et y dans le pad
     unsigned int labs = tl - lmin ;
     unsigned int cabs = tc - cmin ;
 

@@ -3,11 +3,13 @@
 //
 
 #include "tuile.h"
+#include "mur.hpp"
+
 namespace MMaze{
-    MMaze::Tuile::Tuile(int x, int y): vec_sites(4*4), vec_murs(4*4) {
+    MMaze::Tuile::Tuile(int y, int x) {
         this->x = x;
         this->y = y;
-        std::fill(vec_murs.begin(), vec_murs.end(), true); //Fill all the walls
+        vec_murs.resize(24, true);
     }
 
     void Tuile::setType(unsigned int ligne, unsigned int colonne, Type type) {
@@ -15,7 +17,7 @@ namespace MMaze{
         vec_sites[index].type = type;
     }
     /**
-     * Calcul l'index basé sur la ligne et colonne donné
+     * Calcul l'index basé sur la x et y donné
      * @param ligne compris entre 0 et 3 inclus
      * @param colonne compris entre 0 et 3 inclus
      * @return index 0-15
@@ -31,12 +33,10 @@ namespace MMaze{
         this->vec_murs[index] = isSolid;
     }
 
-    int Tuile::getMurIndex(Case case1, Case case2) {
-        return 0;
-    }
 
     void Tuile::setMur(Case case1, Case case2, bool isSolid) {
-        int index = getMurIndex(case1, case2);
+        Mur mur(case1, case2);
+        int index = mur.index();
         setMur(index, isSolid);
     }
 
@@ -49,48 +49,10 @@ namespace MMaze{
         return vec_sites[index];
     }
 
-    int getCaseCoordinate(int caseNumber){
-        int j = 0;
-        for(int i = 0; i < caseNumber; i+=4){
-            j++;
-        }
-        return j;
+    bool Tuile::isMur(Case case1, Case case2) {
+        Mur mur(case1, case2);
+        int murIndex = mur.index();
+        return this->vec_murs[murIndex];
     }
-
-    int getWallCoordinate(int caseNumber1, int caseNumber2){
-        if(caseNumber1 == caseNumber2 
-            || caseNumber1 < 0 
-            || caseNumber2 < 0 
-            || caseNumber1 > 15 
-            || caseNumber2 > 15
-        ){
-            return -1;
-        }
-        int lineC1 = getCaseCoordinate(caseNumber1);
-        int lineC2 = getCaseCoordinate(caseNumber2);
-        if(lineC1 == lineC2){
-            int diff = caseNumber1 - caseNumber2;
-            if(diff*diff != 1){
-                return -1;
-            }
-            else{
-                if(caseNumber1 < caseNumber2){
-                    return 12+lineC1+(caseNumber1*4);
-                }
-                if(caseNumber2 < caseNumber1){
-                    return 12+lineC1+((caseNumber1-1)*4);
-                }
-            }
-        }
-        if(lineC1!=lineC2){
-            if(caseNumber1 == caseNumber2-4 || caseNumber1 == caseNumber2+4){
-                return (caseNumber1<caseNumber2) ? caseNumber1 : caseNumber2;
-            }
-            else{
-                return -1;
-            }
-        }
-    }
-
 }
 

@@ -1,10 +1,11 @@
 #include "draw.hpp"
 
 #include <iostream>
-
+#include "plateau.h";
 using namespace MMaze ;
 
 int main() {
+    /*
   PadPlateau pad ;
   
   pad.ajouter_tuile(0,0);
@@ -59,6 +60,15 @@ int main() {
   PadPlateau cpy ;
   cpy.load("/tmp/pad.json") ;
   std::cout << cpy << std::endl ;
-
+    */
+    Tuile tuile(0,0);
+    Tuile tuile2(0,-1);
+    Tuile tuile3(1,2);
+    Plateau p;
+    p.ajouterTuile(&tuile);
+    p.ajouterTuile(&tuile2);
+    p.ajouterTuile(&tuile3);
+    Tuile * t = p.worldCoordinatesToTuile(0,0);
+    std::cout << "Y: "<<t->y << " X: "<< t->x << std::endl;
   return 0 ;
 }

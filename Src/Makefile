@@ -23,8 +23,7 @@ SOURCES += mur.cpp
 SOURCES += site.cpp
 SOURCES += direction.cpp
 SOURCES += console_pad.cpp
-SOURCES += draw.cpp
-SOURCES += tuiles.cpp
+SOURCES += tuile.cpp
 SOURCES += plateau.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
