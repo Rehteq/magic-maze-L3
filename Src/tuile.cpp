@@ -4,12 +4,16 @@
 
 #include "tuile.h"
 #include "mur.hpp"
+#include "site.hpp"
 #include <cassert>
 namespace MMaze{
     MMaze::Tuile::Tuile(int y, int x) {
         this->x = x;
         this->y = y;
         vec_murs.resize(24, true);
+        for (int i = 0; i < 16; ++i) {
+            vec_sites.push_back(Site(i));
+        }
     }
 
     void Tuile::setType(unsigned int ligne, unsigned int colonne, Type type) {
@@ -40,13 +44,13 @@ namespace MMaze{
         setMur(index, isSolid);
     }
 
-    Site Tuile::getSite(int ligne, int colonne) {
+    Site* Tuile::getSite(int ligne, int colonne) {
         int index = getCaseIndex(ligne, colonne);
         return getSite(index);
     }
 
-    Site Tuile::getSite(int index) {
-        return vec_sites[index];
+    Site* Tuile::getSite(int index) {
+        return &vec_sites[index];
     }
 
     bool Tuile::isMur(Case case1, Case case2) {

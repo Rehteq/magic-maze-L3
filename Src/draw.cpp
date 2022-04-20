@@ -34,8 +34,12 @@ enum struct SiteAddition {
 } ;
 
 union drawable {
-  drawable(Site s_in) : s(s_in) {}
-  drawable(SiteAddition add_in) : add(add_in) {}
+  drawable(Site s_in) : s(s_in) {
+
+  }
+  drawable(SiteAddition add_in) : add(add_in) {
+
+  }
 
   Site s ;
   SiteAddition add ;
@@ -68,13 +72,12 @@ static std::size_t index_tuile(const std::vector<int>& t, int ligne, int colonne
 }
 
 void PadPlateau::ajouter_site(
-    int ligne, int colonne, Case c,
-    Site site
+    int ligne, int colonne, Site site
     ) {
   //index de la tuile dans le tableau
   std::size_t index = index_tuile(m_tuiles, ligne, colonne) ;
   //placement du site
-  m_sites[16 * index + c.index()] = site ;
+  m_sites[16 * index + site.index()] = site ;
 }
 
 PadPlateau::PadPlateau() : 
@@ -91,13 +94,13 @@ void PadPlateau::ajouter_tuile(int ligne, int colonne) {
   m_sites.resize(m_sites.size() + 16, Site(ligne, colonne)) ;
 }
 
-void PadPlateau::ajouter_mur(int ligne, int colonne, Mur m) {
+void PadPlateau::ajouter_mur(int ligne, int colonne, Mur m, bool isSolid) {
   //index de la tuile dans le tableau
   std::size_t index = index_tuile(m_tuiles, ligne, colonne) ;
   //activation du mur
-  m_murs[24 * index + m.index()] = true ;
+  m_murs[24 * index + m.index()] = isSolid ;
 }
-
+/*
 void PadPlateau::ajouter_boutique(int ligne, int colonne, Case c) {
   ajouter_site(ligne, colonne, c, Site::BOUTIQUE) ;
 }
@@ -129,7 +132,7 @@ void PadPlateau::ajouter_vortex(int ligne, int colonne, Case c, Couleur couleur)
   //insertion
   ajouter_site(ligne, colonne, c, site) ;
 }
-
+*/
 void PadPlateau::placer_joueur(int ligne, int colonne, Case c, Couleur couleur) {
   //index du joueur dans les tableaux
   int index_joueur = (int) couleur - 1 ;
@@ -160,12 +163,14 @@ static void dessiner_generique(
       Case c(ci) ;
       //fond ou boutique
       Site site = sites[8*i + ci] ;
-      if(site == Site::BOUTIQUE) {
+      if(site.type == Type::BOUTIQUE) {
         //boutique
         dessine_elt(site, tuiles[i], tuiles[i+1], c, 0) ;
       } else {
         //fond
-        dessine_elt(Site::AUCUN, tuiles[i], tuiles[i+1], c, 0) ;
+        Site site2 = site;
+        site2.type = Type::AUCUN;
+        dessine_elt(site2, tuiles[i], tuiles[i+1], c, 0) ;
       }
     }
   }
@@ -178,9 +183,9 @@ static void dessiner_generique(
       //site de la tuile
       Site site = sites[8*i + ci] ;
       //carracteristiques du site
-      Site type = type_site(site) ;
-      if(site != Site::AUCUN && site != Site::BOUTIQUE && type != Site::DEPART) {
-        if(type == Site::PORTE) {
+      Type type = site.type ;
+      if(type != Type::AUCUN && type != Type::BOUTIQUE && type != Type::DEPART) {
+        if(type == Type::PORTE) {
           try {
             //recherche d'une tuile voisine
             switch(ci) {
@@ -220,7 +225,7 @@ static void dessiner_generique(
         }
       }
       //bords
-      if(type != Site::PORTE) {
+      if(type != Type::PORTE) {
         if(c.ligne() == 0) {
           dessine_elt(SiteAddition::MUR, tuiles[i], tuiles[i+1], c, 1) ;
         }
@@ -254,14 +259,14 @@ static void dessiner_generique(
   }
 
   //dessin des joueurs
-  
+
   for(unsigned int j = 0; j < 4; ++j) {
     if(presences_joueurs[j]) {
       dessine_elt(
-          (SiteAddition) (((int) SiteAddition::JOUEUR) + j + 1), 
-          tuiles_joueurs[2*j], 
-          tuiles_joueurs[2*j+1], 
-          positions_joueurs[j], 
+          (SiteAddition) (((int) SiteAddition::JOUEUR) + j + 1),
+          tuiles_joueurs[2*j],
+          tuiles_joueurs[2*j+1],
+          positions_joueurs[j],
           0
           ) ;
     }
@@ -536,9 +541,10 @@ std::ostream& operator<<(std::ostream& out, const PadPlateau& plateau) {
     unsigned int l = 2 * ( 4 * labs + cabs + ca.ligne()) ;
     unsigned int c = 4 * ( 4 * cabs + (lmax - labs - lmin) + ca.colonne()) ;
 
-    if((int) elt.s <= (int) Site::BOUTIQUE) {
+
+    if(elt.s.type == Type::BOUTIQUE || elt.s.type == Type::AUCUN) {
       //dessin du fond
-      const char* e = site_symbols[(int) elt.s / 10] ;
+      const char* e = elt.s.getSymbol();
       pad.moveto(l, c) ;
       pad 
         << "+" << e << e << e << "+" << std::endl
@@ -571,9 +577,9 @@ std::ostream& operator<<(std::ostream& out, const PadPlateau& plateau) {
     }
 
     //couleur du site s'il y en a une
-    unsigned int site_color = (int) elt.s % 10 ;
+    int site_color = (int) elt.s.couleur;
 
-    if((int) elt.s / 10 == (int) Site::PORTE / 10) {
+    if(elt.s.type == Type::PORTE) {
       //dessin d'une porte
       switch(rot) {
         case 0:
@@ -598,7 +604,7 @@ std::ostream& operator<<(std::ostream& out, const PadPlateau& plateau) {
 
     //dessin du contenu d'une case
     pad.moveto(l+1, c+1) ;
-    pad << txt_colors[site_color] << site_symbols[(int) elt.s / 10] << TXT_CLEAR ;
+    pad << txt_colors[site_color] << site_symbols[(int) elt.s.type / 10] << TXT_CLEAR ;
     
   } ;
 
@@ -638,7 +644,7 @@ void PadPlateau::save(const std::string& fichier) {
     //tableau d'entiers pour les sites
     tuile["sites"] = json::array() ;
     for(int c = 0; c < 16; ++c) {
-      tuile["sites"].push_back((int) m_sites[8*i + c]) ;
+      tuile["sites"].push_back((int) m_sites[8*i + c].type) ;
     }
     bkp["tuiles"].push_back(tuile) ;
   }

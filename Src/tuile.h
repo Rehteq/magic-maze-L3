@@ -12,12 +12,12 @@
 namespace MMaze {
     class Tuile {
     public :
-        int x;
-        int y;
+        int x; // Colonne
+        int y; // Ligne
         std::vector<Site> vec_sites;
         std::vector<bool> vec_murs;
-        Site getSite(int index);
-        Site getSite(int ligne, int colonne);
+        Site * getSite(int index);
+        Site * getSite(int ligne, int colonne);
         void setType(unsigned int ligne, unsigned colonne, Type type);
         void setMur(Case case1, Case case2, bool isSolid);
         void setMur(int index, bool isSolid);

@@ -12,8 +12,16 @@ namespace MMaze {
         Generateur();
 
         ~Generateur();
+
         Tuile *genererTuile(Tuile *tuile);
+
+        int getRoot(int x);
+
+        bool join(int elem1, int elem2);
+    private:
+        std::vector<int> m_union;
     };
 }
+
 
 #endif //SRC_GENERATEUR_H

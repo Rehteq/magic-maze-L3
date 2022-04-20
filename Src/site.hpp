@@ -10,15 +10,18 @@ namespace MMaze {
         PORTE,
         OBJECTIF,
         SORTIE,
-        POINT_DEPART
+        DEPART,
+        VORTEX,
+        BOUTIQUE
     };
 
-    class Site : Case {
+    class Site : public Case {
     public:
         Type type;
         Couleur couleur;
         Site(unsigned int li, unsigned int col, Couleur c = Couleur::AUCUNE, Type t = AUCUN);
-        Site(unsigned int index, Couleur c, Type t);
+        Site(unsigned int index, Couleur c = Couleur::AUCUNE, Type t = AUCUN);
+        const char* getSymbol();
     };
 } //end of namespace MMaze
 

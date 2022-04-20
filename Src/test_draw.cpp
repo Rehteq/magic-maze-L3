@@ -1,7 +1,9 @@
 #include "draw.hpp"
 
 #include <iostream>
-#include "plateau.h";
+#include "plateau.h"
+#include "generateur.h"
+
 using namespace MMaze ;
 
 int main() {
@@ -62,13 +64,25 @@ int main() {
   std::cout << cpy << std::endl ;
     */
     Tuile tuile(0,0);
-    Tuile tuile2(0,-1);
-    Tuile tuile3(1,2);
+    Generateur gen;
+    gen.genererTuile(&tuile);
     Plateau p;
     p.ajouterTuile(&tuile);
+    Tuile tuile2(0,1);
+    gen.genererTuile(&tuile2);
     p.ajouterTuile(&tuile2);
+
+    Tuile tuile3(1,0);
+    gen.genererTuile(&tuile3);
     p.ajouterTuile(&tuile3);
-    Tuile * t = p.worldCoordinatesToTuile(0,0);
-    std::cout << "Y: "<<t->y << " X: "<< t->x << std::endl;
+
+    Tuile tuile4(1,1);
+    gen.genererTuile(&tuile4);
+    p.ajouterTuile(&tuile4);
+
+    //Site* s = p.worldCoordinatesToSite(0,1);
+    //std::cout << "Index: "<<s->index() << std::endl;
+    PadPlateau pad = p.toPadPlateau();
+    std::cout << pad << std::endl;
   return 0 ;
 }

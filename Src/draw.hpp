@@ -22,14 +22,16 @@ class PadPlateau {
     //ajout d'elements du plateau. Non reversible
     void ajouter_tuile(int ligne, int colonne) ;
 
-    void ajouter_mur(int ligne, int colonne, Mur m) ;
+    void ajouter_mur(int ligne, int colonne, Mur m, bool isSolid) ;
 
-    void ajouter_site(int ligne, int colonne, Case c, Site s) ;
+    void ajouter_site(int ligne, int colonne, Site s) ;
+    /*
     void ajouter_boutique(int ligne, int colonne, Case c) ;
     void ajouter_porte(int ligne, int colonne, Case c, Couleur couleur) ;
     void ajouter_objectif(int ligne, int colonne, Case c, Couleur couleur) ;
     void ajouter_sortie(int ligne, int colonne, Case c, Couleur couleur) ;
     void ajouter_vortex(int ligne, int colonne, Case c, Couleur couleur) ;
+     */
 
     //placement des joueurs, modifiable par la suite
     void placer_joueur(int ligne, int colonne, Case c, Couleur couleur) ;

@@ -3,11 +3,13 @@
 //
 #include <iostream>
 #include "plateau.h"
+#include "draw.hpp"
 
 Site* Plateau::worldCoordinatesToSite(int ligne, int colonne) {
     Tuile* tuile = this->worldCoordinatesToTuile(ligne, colonne);
-
-    return nullptr;
+    int resteX = colonne - tuile->x*4;
+    int resteY = ligne - tuile->y*4;
+    return tuile->getSite(resteY,resteX);
 }
 
 Tuile* Plateau::worldCoordinatesToTuile(int ligne, int colonne) {
@@ -20,12 +22,14 @@ Tuile* Plateau::worldCoordinatesToTuile(int ligne, int colonne) {
 }
 
 Tuile* Plateau::getTuile(int y, int x) {
+    Tuile * tuile;
     for (auto & vec_tuile : vec_tuiles) {
         if (vec_tuile->x == x && vec_tuile->y == y) {
-            return vec_tuile;
+            tuile = vec_tuile;
         }
     }
-    return nullptr;
+    assert(tuile != nullptr); // tuile non trouvée
+    return tuile;
 }
 
 void Plateau::ajouterTuile(Tuile* t) {
@@ -34,4 +38,23 @@ void Plateau::ajouterTuile(Tuile* t) {
 
 Plateau::Plateau() {
 
+}
+
+PadPlateau Plateau::toPadPlateau() {
+
+    PadPlateau padPlateau;
+    for (int i = 0; i < vec_tuiles.size(); ++i) {
+        Tuile* tuile = vec_tuiles[i];
+        padPlateau.ajouter_tuile(tuile->y, tuile->x);
+        for (int j = 0; j < tuile->vec_murs.size(); ++j) {
+            Mur mur(j);
+            padPlateau.ajouter_mur(tuile->y,tuile->x,mur, tuile->vec_murs[j]);
+        }
+        for (int j = 0; j < tuile->vec_sites.size(); ++j) {
+            Site site = tuile->vec_sites[j];
+            padPlateau.ajouter_site(tuile->y,tuile->x, site);
+        }
+        
+    }
+    return padPlateau;
 }

@@ -3,13 +3,13 @@ CXXFLAGS += -g -Wall -std=c++11 -pedantic
 
 CAIRO_CXXFLAGS = -DNO_CAIRO
 
-IMAGICK_FLAGS = $(shell PKG_CONFIG_PATH=/usr/lib/imagemagick6/pkgconfig pkg-config --cflags ImageMagick++)
+IMAGICK_FLAGS = $(shell PKG_CONFIG_PATH=/opt/homebrew/Cellar/imagemagick/7.1.0-29/lib/pkgconfig pkg-config --cflags ImageMagick++)
 IMAGICK_CXXFLAGS = $(if $(IMAGICK_FLAGS),$(IMAGICK_FLAGS),-DNO_IMAGICK)
 
 CXXFLAGS += $(CAIRO_CXXFLAGS) $(IMAGICK_CXXFLAGS)
 
 DRAW_LDFLAGS = $(shell pkg-config --libs librsvg-2.0)
-DRAW_LDFLAGS += $(shell PKG_CONFIG_PATH=/usr/lib/imagemagick6/pkgconfig pkg-config --libs ImageMagick++)
+DRAW_LDFLAGS += $(shell PKG_CONFIG_PATH=/opt/homebrew/Cellar/imagemagick/7.1.0-29/lib/pkgconfig pkg-config --libs ImageMagick++)
 
 LDFLAGS += $(DRAW_LDFLAGS)
 
@@ -19,6 +19,7 @@ SOURCES =
 SOURCES += melangeur.cpp
 SOURCES += couleurs.cpp
 SOURCES += case.cpp
+SOURCES += draw.cpp
 SOURCES += mur.cpp
 SOURCES += site.cpp
 SOURCES += direction.cpp

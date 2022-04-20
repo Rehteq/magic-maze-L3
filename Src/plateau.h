@@ -6,6 +6,8 @@
 #define SRC_PLATEAU_H
 #include <vector>
 #include "tuile.h"
+#include "draw.hpp"
+
 using namespace MMaze;
 class Plateau {
 public:
@@ -15,11 +17,12 @@ public:
     Tuile * worldCoordinatesToTuile(int ligne, int colonne);
     Site * worldCoordinatesToSite(int ligne, int colonne);
     Tuile * getTuile(int y, int x);
-
+    PadPlateau toPadPlateau();
 private:
     std::vector<Tuile*> vec_tuiles;
 
 };
+
 
 
 #endif //SRC_PLATEAU_H

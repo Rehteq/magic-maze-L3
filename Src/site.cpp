@@ -10,4 +10,17 @@ namespace MMaze {
         type = t;
         couleur = c;
     }
+
+    const char *Site::getSymbol() {
+        switch (type) {
+            case (Type::AUCUN): return " ";
+            case (Type::SORTIE): return "[->";
+            case (Type::BOUTIQUE): return "#";
+            case (Type::OBJECTIF): return "{$}";
+            case (Type::VORTEX): return "@";
+            case (Type::PORTE): return "";
+            case (Type::DEPART): return "";
+        }
+        return nullptr;
+    }
 } //end of namespace MMaze
