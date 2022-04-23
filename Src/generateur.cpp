@@ -84,34 +84,15 @@ namespace MMaze {
 
     //search for missing walls
     int missingWall(Tuile *tuile, int index){
-        int val[5] = {-1, -1, -1, -1, 4};
+        int[] val = tuile->possiblePath(index);
+        int nbWalls = 0;
         Case c = Case(index);
-        //nb of wall around a case = [4]; up = [2]; down = [0]; right = [1]; left = [3]
-        if(c.ligne() == 1){
-            val[2] = 1;
-            val[4] += 1;
-        }
-        if(c.ligne() == 4){
-            val[0] = 1;
-            val[4] += 1;
-        }
-        if(c.colonne() == 1){
-            val[3] = 1;
-            val[4] += 1;
-        }
-        if(c.colonne() == 4){
-            val[1] = 1;
-            val[4] += 1;
-        }
         for(int i = 0; i < 4; i++){
-            if(val[i] != 1){
-                if(tuile->isMur(c, c.voisine((Direction)i))){
-                    val[4] += 1;
-                    val[i] = 1;
-                }
+            if(val[i] == -1){
+                nbWalls++;
             }
         }
-        if(val[4] == 3){
+        if(nbWalls == 3){
             for(int i = 0; i < 4; i++){
                 if(val[i] == -1){
                     if(i == 2){
