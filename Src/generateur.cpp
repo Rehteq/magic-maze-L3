@@ -80,4 +80,71 @@ namespace MMaze {
         return true;
     }
 
+    // Closing walls
+
+    //search for missing walls
+    int missingWall(Tuile *tuile, int index){
+        int val[5] = {-1, -1, -1, -1, 4};
+        Case c = Case(index);
+        //nb of wall around a case = [4]; up = [2]; down = [0]; right = [1]; left = [3]
+        if(c.ligne() == 1){
+            val[2] = 1;
+            val[4] += 1;
+        }
+        if(c.ligne() == 4){
+            val[0] = 1;
+            val[4] += 1;
+        }
+        if(c.colonne() == 1){
+            val[3] = 1;
+            val[4] += 1;
+        }
+        if(c.colonne() == 4){
+            val[1] = 1;
+            val[4] += 1;
+        }
+        for(int i = 0; i < 4; i++){
+            if(val[i] != 1){
+                if(tuile->isMur(c, c.voisine((Direction)i))){
+                    val[4] += 1;
+                    val[i] = 1;
+                }
+            }
+        }
+        if(val[4] == 3){
+            for(int i = 0; i < 4; i++){
+                if(val[i] == -1){
+                    if(i == 2){
+                        return index-4;
+                    }
+                    if(i == 0){
+                        return index+4;
+                    }
+                    if(i == 3){
+                        return c.ligne()+12+(4*(index-(c.ligne()*4)-1));
+                    }
+                    if(i == 1){
+                        return c.ligne()+12+(4*(index-(c.ligne()*4)));
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    void close(Tuile *tuile){
+        int changes;
+        int toClose;
+        while(changes != 0){
+            changes = 0;
+            for(int i = 0; i < 16; i++){
+                toClose = missingWall(tuile, i);
+                if(toClose != -1){
+                    tuile->setMur(toClose, true);
+                    changes += 1;
+                }
+            }
+        }
+    }
+
 }

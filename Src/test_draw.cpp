@@ -66,6 +66,7 @@ int main() {
     Tuile tuile(0,0);
     Generateur gen;
     gen.genererTuile(&tuile);
+    //gen.close(&tuile);
     Plateau p;
     p.ajouterTuile(&tuile);
     Tuile tuile2(0,1);

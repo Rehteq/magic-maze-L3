@@ -4,6 +4,7 @@
 #include <iostream>
 #include "plateau.h"
 #include "draw.hpp"
+#include <cassert>
 
 Site* Plateau::worldCoordinatesToSite(int ligne, int colonne) {
     Tuile* tuile = this->worldCoordinatesToTuile(ligne, colonne);

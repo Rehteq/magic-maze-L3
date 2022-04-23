@@ -18,8 +18,11 @@ namespace MMaze {
         int getRoot(int x);
 
         bool join(int elem1, int elem2);
+
+        void close(Tuile *tuile);
     private:
         std::vector<int> m_union;
+        int missingWall(Tuile *tuile, int index);
     };
 }
 
