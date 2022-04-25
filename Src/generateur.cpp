@@ -13,14 +13,20 @@
 namespace MMaze {
 
     Tuile* Generateur::genererTuile(MMaze::Tuile *tuile) {
-
-        //tuile->setType(1,0, Type::PORTE);
-        //tuile->setType(0,2, Type::PORTE);
-        tuile->setType(2,3, Type::PORTE);
+        std::random_device seed;
+        std::mt19937 rd(seed());
+        std::uniform_int_distribution<int> rdGen(0, 3);
+        for(int i = 0; i < 4; i++){
+            switch(rdGen(rd)){
+                case 0: tuile->setType(1,0, Type::PORTE); break;
+                case 1: tuile->setType(0,2, Type::PORTE); break;
+                case 2: tuile->setType(2,3, Type::PORTE); break;
+            }
+        }
         tuile->setType(3,1, Type::PORTE);
 
         //Reset the union of the Tuile
-        m_union = std::vector<int>(); 
+        m_union = std::vector<int>();
         for (int i = 0; i < 16; ++i) {
             m_union.push_back(i);
         }
