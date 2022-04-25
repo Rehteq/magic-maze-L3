@@ -83,7 +83,7 @@ namespace MMaze {
     // Closing walls
 
     //search for missing walls
-    int missingWall(Tuile *tuile, int index){
+    int Generateur::missingWall(Tuile *tuile, int index){
         int val[] = tuile->possiblePath(index);
         int nbWalls = 0;
         Case c = Case(index);
@@ -113,7 +113,7 @@ namespace MMaze {
         return -1;
     }
 
-    void close(Tuile *tuile){
+    void Generateur::close(Tuile *tuile){
         int changes;
         int toClose;
         while(changes != 0){
