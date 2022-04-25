@@ -84,7 +84,7 @@ namespace MMaze {
 
     //search for missing walls
     int missingWall(Tuile *tuile, int index){
-        int[] val = tuile->possiblePath(index);
+        int val[] = tuile->possiblePath(index);
         int nbWalls = 0;
         Case c = Case(index);
         for(int i = 0; i < 4; i++){
