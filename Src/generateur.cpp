@@ -12,16 +12,15 @@
 
 namespace MMaze {
 
-    Tuile* Generateur::genererTuile(MMaze::Tuile *tuile) {
-        std::random_device seed;
-        std::mt19937 rd(seed());
-        std::uniform_int_distribution<int> rdGen(0, 3);
-        for(int i = 0; i < 4; i++){
-            switch(rdGen(rd)){
-                case 0: tuile->setType(1,0, Type::PORTE); break;
-                case 1: tuile->setType(0,2, Type::PORTE); break;
-                case 2: tuile->setType(2,3, Type::PORTE); break;
-            }
+    Tuile* Generateur::genererTuile(MMaze::Tuile *tuile, TuileType tuileType) {
+
+        switch (tuileType) {
+            case TuileType::TUILECLASSIQUE :
+                initTuileClassique(tuile);
+                break;
+            case TuileType::TUILEDEPART :
+                initTuileDepart(tuile);
+                break;
         }
         tuile->setType(3,1, Type::PORTE);
 
@@ -60,6 +59,43 @@ namespace MMaze {
             }
         }
         return tuile;
+    }
+
+    Tuile* Generateur::initTuileDepart(MMaze::Tuile *tuile) {
+        tuile->setType(1,0, Type::PORTE);
+        tuile->setType(0,2, Type::PORTE);
+        tuile->setType(2,3, Type::PORTE);
+        m_union = std::vector<int>();
+        for (int i = 0; i < 16; ++i) {
+            m_union.push_back(i);
+        }
+        tuile->setType(1, 1, DEPART);
+        tuile->setType(1, 2, DEPART);
+        tuile->setType(2, 1, DEPART);
+        tuile->setType(2, 2, DEPART);
+        tuile->setMur(5, false);
+        tuile->setMur(6,false);
+        tuile->setMur(17, false);
+        tuile->setMur(18, false);
+    }
+
+    Tuile* Generateur::initTuileClassique(MMaze::Tuile *tuile) {
+        std::random_device seed;
+        std::mt19937 rd(seed());
+        std::uniform_int_distribution<int> rdGen(0, 3);
+        for(int i = 0; i < 4; i++){
+            switch(rdGen(rd)){
+                case 0:
+                    tuile->setType(1,0, Type::PORTE);
+                    break;
+                case 1:
+                    tuile->setType(0,2, Type::PORTE);
+                    break;
+                case 2:
+                    tuile->setType(2,3, Type::PORTE);
+                    break;
+            }
+        }
     }
 
     Generateur::~Generateur() {
@@ -151,6 +187,34 @@ namespace MMaze {
                 }
             }
         }
+    }
+
+    bool Generateur::ajouterObjectif(Couleur c, Tuile *tuile){
+        if(objectifs[(int)c]){
+            return false;
+        }
+        std::random_device seed;
+        std::mt19937 rd(seed());
+        std::uniform_int_distribution<int> rdGen(0, 15);
+        int random = rdGen(rd);
+        while(tuile->getSite(random)->type != AUCUN){
+            random = rdGen(rd);
+        }
+        Site objectifSite = Site(random);
+        tuile->setType(objectifSite.ligne(), objectifSite.colonne(), OBJECTIF);
+        objectifSite.couleur = c;
+        objectifs[(int)c] = true;
+        return true;
+    }
+
+    bool Generateur::retirerObjectif(Site site){
+        if(!objectifs[(int)site.couleur] || site.type != OBJECTIF){
+            return false;
+        }
+        objectifs[(int)site.couleur] = false;
+        site.couleur = Couleur::AUCUNE;
+        site.type = AUCUN;
+        return true;
     }
 
 }

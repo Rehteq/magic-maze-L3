@@ -65,20 +65,20 @@ int main() {
     */
     Tuile tuile(0,0);
     Generateur gen;
-    gen.genererTuile(&tuile);
+    gen.genererTuile(&tuile, TUILEDEPART);
     //gen.close(&tuile);
     Plateau p;
     p.ajouterTuile(&tuile);
     Tuile tuile2(0,1);
-    gen.genererTuile(&tuile2);
+    gen.genererTuile(&tuile2, TUILECLASSIQUE);
     p.ajouterTuile(&tuile2);
 
     Tuile tuile3(1,0);
-    gen.genererTuile(&tuile3);
+    gen.genererTuile(&tuile3, TUILECLASSIQUE);
     p.ajouterTuile(&tuile3);
 
     Tuile tuile4(1,1);
-    gen.genererTuile(&tuile4);
+    gen.genererTuile(&tuile4, TUILECLASSIQUE);
     p.ajouterTuile(&tuile4);
 
     //Site* s = p.worldCoordinatesToSite(0,1);
