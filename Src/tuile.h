@@ -23,6 +23,8 @@ namespace MMaze {
         void setMur(int index, bool isSolid);
         bool isMur(Case case1, Case case2);
         Tuile(int y, int x);
+        int[] possiblePath(int index);
+        int[] dijkstra(int index1, int index2, int[] path, int cout);
 
     private:
         int getCaseIndex(unsigned int ligne, unsigned colonne);
