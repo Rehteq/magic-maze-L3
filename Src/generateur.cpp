@@ -125,7 +125,7 @@ namespace MMaze {
     // Closing walls
 
     //search for missing walls
-    int missingWall(Tuile *tuile, int index){
+    int Generateur::missingWall(Tuile *tuile, int index){
         int val[5] = {-1, -1, -1, -1, 4};
         Case c = Case(index);
         //nb of wall around a case = [4]; up = [2]; down = [0]; right = [1]; left = [3]
