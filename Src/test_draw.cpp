@@ -3,6 +3,7 @@
 #include <iostream>
 #include "plateau.h"
 #include "generateur.h"
+#include "graphe.h"
 
 using namespace MMaze ;
 
@@ -85,5 +86,6 @@ int main() {
     //std::cout << "Index: "<<s->index() << std::endl;
     PadPlateau pad = p.toPadPlateau();
     std::cout << pad << std::endl;
+    std::cout << Graphe::fromTuile(&tuile4)<< std::endl;
   return 0 ;
 }

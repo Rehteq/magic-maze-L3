@@ -6,6 +6,8 @@
 #include "mur.hpp"
 #include "site.hpp"
 #include <cassert>
+#include <algorithm>
+
 namespace MMaze{
     MMaze::Tuile::Tuile(int y, int x) {
         this->x = x;
@@ -57,6 +59,72 @@ namespace MMaze{
         Mur mur(case1, case2);
         int murIndex = mur.index();
         return this->vec_murs[murIndex];
+    }
+
+    // -1 if wall 1 if clear
+    int[] possiblePath(int index){
+        int val[4] = {0, 0, 0, 0};
+        Case c = Case(index);
+        //up = [2]; down = [0]; right = [1]; left = [3]
+        if(c.ligne() == 1){
+            val[2] = -1;
+        }
+        if(c.ligne() == 4){
+            val[0] = -1;
+        }
+        if(c.colonne() == 1){
+            val[3] = -1;
+        }
+        if(c.colonne() == 4){
+            val[1] = -1;
+        }
+        for(int i = 0; i < 4; i++){
+            if(val[i] == 0){
+                if(!this->isMur(c, c.voisine((Direction)i))){
+                    val[i] = 1;
+                }else{
+                    val[i] = -1;
+                }
+            }
+        }
+        return val;
+    }
+
+    int[] dijkstra(int index1, int index2, int[] path, int cout) {
+        int tmp[4][16];
+        int val[4] = possiblePath(index1);
+        int lowest;
+        Case c = Case(index1);
+
+        for(int i = 0; i < 4; ++i) {
+            for(int j = 0; j < 16; j++){
+                path[j] = 20; // poid a 20 qui est au dessus du possible
+                tmp[i][j] = 20;
+            }
+        }
+
+        for(int i = 0; i < 4; i++){
+            if(val[i] == 1){
+                int voisine = c.voisine((Direction)i).index();
+                if(voisine == index2){
+                    path[voisine] = cout;
+                    return path;
+                }
+                if(cout > path[voisine]){
+                    return path;
+                }
+                path[voisine] = cout;
+                tmp[i] = dijkstra(voisine, index2, path, cout++);
+            }
+        }
+
+        lowest = std::min(tmp[0][index2], std::min(tmp[1][index2], std::min(tmp[2][index2], tmp[3][index2])));
+
+        for(int i = 0; i < 4; i++){
+            if(tmp[i][index2] == lowest){
+                return tmp[i];
+            }
+        }
     }
 }
 
