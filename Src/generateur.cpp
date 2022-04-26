@@ -77,6 +77,7 @@ namespace MMaze {
         tuile->setMur(6,false);
         tuile->setMur(17, false);
         tuile->setMur(18, false);
+        return tuile;
     }
 
     Tuile* Generateur::initTuileClassique(MMaze::Tuile *tuile) {
@@ -96,6 +97,7 @@ namespace MMaze {
                     break;
             }
         }
+        return tuile;
     }
 
     Generateur::~Generateur() {

@@ -8,6 +8,7 @@
 #include "case.hpp"
 #include "tuile.h"
 #include "site.hpp"
+#include <ostream>
 #include <vector>
 
 
