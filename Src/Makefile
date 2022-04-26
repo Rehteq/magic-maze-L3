@@ -27,6 +27,7 @@ SOURCES += console_pad.cpp
 SOURCES += tuile.cpp
 SOURCES += plateau.cpp
 SOURCES += generateur.cpp
+SOURCES += graphe.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
