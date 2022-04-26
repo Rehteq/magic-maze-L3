@@ -22,7 +22,8 @@ namespace MMaze {
                 initTuileDepart(tuile);
                 break;
         }
-        tuile->setType(3,1, Type::PORTE);
+
+
 
         //Reset the union of the Tuile
         m_union = std::vector<int>();
@@ -62,9 +63,17 @@ namespace MMaze {
     }
 
     Tuile* Generateur::initTuileDepart(MMaze::Tuile *tuile) {
+        std::random_device seed;
+        std::mt19937 rd(seed());
+        std::uniform_int_distribution<int> rdGen(1, 4);
         tuile->setType(1,0, Type::PORTE);
+        tuile->getSite(1,0)->couleur = (Couleur)(rdGen(rd));
         tuile->setType(0,2, Type::PORTE);
+        tuile->getSite(0,2)->couleur = (Couleur)(rdGen(rd));
         tuile->setType(2,3, Type::PORTE);
+        tuile->getSite(2,3)->couleur = (Couleur)(rdGen(rd));
+        tuile->setType(3,1, Type::PORTE);
+        tuile->getSite(3,1)->couleur = (Couleur)(rdGen(rd));
         m_union = std::vector<int>();
         for (int i = 0; i < 16; ++i) {
             m_union.push_back(i);
@@ -87,16 +96,21 @@ namespace MMaze {
         for(int i = 0; i < 4; i++){
             switch(rdGen(rd)){
                 case 0:
+                    tuile->getSite(1,0)->couleur = (Couleur)(rdGen(rd)+1);
                     tuile->setType(1,0, Type::PORTE);
                     break;
                 case 1:
+                    tuile->getSite(0,2)->couleur = (Couleur)(rdGen(rd)+1);
                     tuile->setType(0,2, Type::PORTE);
                     break;
                 case 2:
+                    tuile->getSite(2,3)->couleur = (Couleur)(rdGen(rd)+1);
                     tuile->setType(2,3, Type::PORTE);
                     break;
             }
         }
+        tuile->setType(3,1, Type::PORTE);
+        tuile->getSite(3,1)->couleur = (Couleur)(rdGen(rd));
         return tuile;
     }
 
