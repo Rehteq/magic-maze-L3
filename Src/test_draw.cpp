@@ -72,6 +72,9 @@ int main() {
     Tuile tuile(0,0);
     gen.genererTuile(&tuile, TUILEDEPART);
     p.ajouterTuile(&tuile);
+    std::cout << p.toPadPlateau() << std::endl;
+    int c = getchar();
+
     /*
     Joueur j(Couleur::JAUNE);
     j.tuile = &tuile;
@@ -79,39 +82,48 @@ int main() {
     p.joueurs.push_back(&j);
      */
     //std::vector<Tuile> tuiles;
-    std::cout << p.toPadPlateau() << std::endl;
-    Tuile tuile2(0,1);
-    gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
-    p.ajouterTuile(&tuile2);
-    tuile2.rotateTuile(-1);
 
-    std::cout << "Après Rotations" << std::endl;
-    gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile2);
-    std::cout << p.toPadPlateau() << std::endl;
+    if (tuile.getSite(11)->type == Type::PORTE){
+        std::cout << "Ajout à droite" << std::endl;
+        Tuile tuile2(0,1);
+        gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
+        p.ajouterTuile(&tuile2);
+        tuile2.rotateTuile(-1);
+        std::cout << p.toPadPlateau() << std::endl;
+        c = getchar();
+    }
+    if (tuile.getSite(13)->type == Type::PORTE){
+        std::cout << "Ajout en dessous" << std::endl;
+        //Tuile 3
+        Tuile tuile3(1,0);
+        gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
+        p.ajouterTuile(&tuile3);
+        tuile3.rotateTuile(2);
+        std::cout << p.toPadPlateau() << std::endl;
+        c = getchar();
+    }
 
-    /*
-    Tuile tuile3(1,0);
-    gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
-    Tuile tuile4(2,2);
-    gen.genererTuile(&tuile4, MMaze::TUILECLASSIQUE);
-    gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile4);
-    tuile4.rotateTuile(2);
-    p.ajouterTuile(&tuile2);
-    p.ajouterTuile(&tuile3);
-    p.ajouterTuile(&tuile4);
-    //Site* s = p.worldCoordinatesToSite(0,1);
-    //std::cout << "Index: "<<s->index() << std::endl;
-    PadPlateau pad = p.toPadPlateau();
-    std::cout << pad << std::endl;
+    if (tuile.getSite(4)->type == Type::PORTE){
+        std::cout << "Ajout à gauche" << std::endl;
+        //Tuile 4
+        Tuile tuile4(0,-1);
+        gen.genererTuile(&tuile4, MMaze::TUILECLASSIQUE);
+        p.ajouterTuile(&tuile4);
+        tuile4.rotateTuile(1);
+        std::cout << p.toPadPlateau() << std::endl;
+        c = getchar();
+    }
 
     //Dessins d'un graphe et voisins
-    Graphe g = Graphe::fromTuile(&tuile4);
+    std::cout<< "Dessin du graphe de la tuile de départ" << std::endl;
+    Graphe g = Graphe::fromTuile(&tuile);
     std::cout << g << std::endl;
-
+    c = getchar();
     //Dessins du résultat de Dijkstra
-    node *n = g.find_noeud(&tuile4, tuile4.getSite(0,0));
+    std::cout<< "Dessin des distance depuis la tuile de départ en 0 0" << std::endl;
+    node *n = g.find_noeud(&tuile, tuile.getSite(1,1));
     g.print_distances(*n);
-     */
+
   return 0 ;
 }
 void handle_input(){

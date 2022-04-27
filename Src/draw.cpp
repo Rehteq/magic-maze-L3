@@ -91,7 +91,7 @@ void PadPlateau::ajouter_tuile(int ligne, int colonne) {
 
   //allocation des murs et des sites, aucun mur et aucun site
   m_murs.resize(m_murs.size() + 24, false) ;
-  m_sites.resize(m_sites.size() + 16, Site(ligne, colonne)) ;
+  m_sites.resize(m_sites.size() + 16, Site(0, 0)) ;
 }
 
 void PadPlateau::ajouter_mur(int ligne, int colonne, Mur m, bool isSolid) {

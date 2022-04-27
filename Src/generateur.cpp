@@ -254,7 +254,6 @@ namespace MMaze {
         }
         Site objectifSite = Site(random);
         tuile->setType(objectifSite.ligne(), objectifSite.colonne(), OBJECTIF);
-        std::cout << "Objectif ajouté en " << "Tuile : " << tuile->x << "," << tuile->y << " Case : "<<objectifSite.index() << std::endl;
         tuile->getSite(random)->couleur = c;
         objectifs[((int)c)-1] = true;
         return true;
@@ -283,7 +282,6 @@ namespace MMaze {
         }
         Site sortieSite = Site(random);
         tuile->setType(sortieSite.ligne(), sortieSite.colonne(), SORTIE);
-        std::cout << "Sortie ajouté en " << "Tuile : " << tuile->x << "," << tuile->y << " Case : "<<sortieSite.index() << std::endl;
         tuile->getSite(random)->couleur = c;
         sorties[((int)c)-1] = true;
         return true;
