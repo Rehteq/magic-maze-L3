@@ -23,7 +23,7 @@ namespace MMaze {
         void setMur(int index, bool isSolid);
         bool isMur(Case case1, Case case2);
         Tuile(int y, int x);
-
+        void rotateTuile(int rotation);
     private:
         int getCaseIndex(unsigned int ligne, unsigned colonne);
     };

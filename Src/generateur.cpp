@@ -23,8 +23,6 @@ namespace MMaze {
                 break;
         }
 
-
-
         //Reset the union of the Tuile
         m_union = std::vector<int>();
         for (int i = 0; i < 16; ++i) {
@@ -59,6 +57,8 @@ namespace MMaze {
                 join(mur[0].index(), mur[1].index());
             }
         }
+
+        close(tuile);
         return tuile;
     }
 
@@ -66,6 +66,10 @@ namespace MMaze {
         std::random_device seed;
         std::mt19937 rd(seed());
         std::uniform_int_distribution<int> rdGen(1, 4);
+        //Melangeur<Couleur> couleurs;
+        //for (int i = 1; i <= 4; ++i) {
+        //    couleurs.inserer((Couleur)i);
+        //}
         tuile->setType(1,0, Type::PORTE);
         tuile->getSite(1,0)->couleur = (Couleur)(rdGen(rd));
         tuile->setType(0,2, Type::PORTE);
@@ -93,6 +97,11 @@ namespace MMaze {
         std::random_device seed;
         std::mt19937 rd(seed());
         std::uniform_int_distribution<int> rdGen(0, 3);
+        //Melangeur<Couleur> couleurs;
+        //for (int i = 1; i <= 4; ++i) {
+        //    couleurs.inserer((Couleur)i);
+        //}
+
         for(int i = 0; i < 4; i++){
             switch(rdGen(rd)){
                 case 0:
@@ -110,7 +119,6 @@ namespace MMaze {
             }
         }
         tuile->setType(3,1, Type::PORTE);
-        tuile->getSite(3,1)->couleur = (Couleur)(rdGen(rd));
         return tuile;
     }
 
@@ -139,25 +147,26 @@ namespace MMaze {
     }
 
     // Closing walls
-
-    //search for missing walls
-    int Generateur::missingWall(Tuile *tuile, int index){
-        int val[5] = {-1, -1, -1, -1, 4};
+    int * Generateur::possibleDirection(Tuile *tuile, int index, int *val){
         Case c = Case(index);
+        for(int i = 0; i < 4; i++){
+            val[i] = -1;
+        }
+        val[4] = 0;
         //nb of wall around a case = [4]; up = [2]; down = [0]; right = [1]; left = [3]
-        if(c.ligne() == 1){
+        if(c.ligne() == 0){
             val[2] = 1;
             val[4] += 1;
         }
-        if(c.ligne() == 4){
+        if(c.ligne() == 3){
             val[0] = 1;
             val[4] += 1;
         }
-        if(c.colonne() == 1){
+        if(c.colonne() == 0){
             val[3] = 1;
             val[4] += 1;
         }
-        if(c.colonne() == 4){
+        if(c.colonne() == 3){
             val[1] = 1;
             val[4] += 1;
         }
@@ -169,6 +178,12 @@ namespace MMaze {
                 }
             }
         }
+        return val;
+    }
+    //search for missing walls
+    int Generateur::missingWall(Tuile *tuile, int index, int *val){
+        possibleDirection(tuile, index, val);
+        Case c = Case(index);
         if(val[4] == 3){
             for(int i = 0; i < 4; i++){
                 if(val[i] == -1){
@@ -193,17 +208,22 @@ namespace MMaze {
     void Generateur::close(Tuile *tuile){
         int changes;
         int toClose;
-        while(changes != 0){
+        int val[5];
+        do{
             changes = 0;
             for(int i = 0; i < 16; i++){
-                toClose = missingWall(tuile, i);
-                if(toClose != -1 && tuile->getSite(i)->type == AUCUN){
+                toClose = missingWall(tuile, i, val);
+                if(toClose != -1 && tuile->getSite(i)->type == Type::AUCUN){
                     tuile->setMur(toClose, true);
-                    tuile->getSite(i)->type = BOUTIQUE;
+                    //tuile->getSite(i)->type = Type::BOUTIQUE;
                     changes += 1;
                 }
+                if(val[4] == 4){
+                    tuile->getSite(i)->type = Type::BOUTIQUE;
+                }
             }
-        }
+        } while (changes != 0);
+
     }
 
     bool Generateur::ajouterObjectif(Couleur c, Tuile *tuile){
@@ -214,7 +234,7 @@ namespace MMaze {
         std::mt19937 rd(seed());
         std::uniform_int_distribution<int> rdGen(0, 15);
         int random = rdGen(rd);
-        while(tuile->getSite(random)->type != AUCUN){
+        while(tuile->getSite(random)->type != Type::AUCUN){
             random = rdGen(rd);
         }
         Site objectifSite = Site(random);

@@ -1,13 +1,16 @@
 #include "draw.hpp"
 
 #include <iostream>
+#include <algorithm>
 #include "plateau.h"
 #include "generateur.h"
 #include "graphe.h"
+#include "melangeur.hpp"
 
 using namespace MMaze ;
 
 int main() {
+    //MelangeurOptions::imprevisible();
     /*
   PadPlateau pad ;
   
@@ -67,25 +70,25 @@ int main() {
     Tuile tuile(0,0);
     Generateur gen;
     gen.genererTuile(&tuile, TUILEDEPART);
-    //gen.close(&tuile);
     Plateau p;
     p.ajouterTuile(&tuile);
+    //std::vector<Tuile> tuiles;
+
     Tuile tuile2(0,1);
-    gen.genererTuile(&tuile2, TUILECLASSIQUE);
-    p.ajouterTuile(&tuile2);
-
+    gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
     Tuile tuile3(1,0);
-    gen.genererTuile(&tuile3, TUILECLASSIQUE);
+    gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
+    //gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile3);
+    Tuile tuile4(2,2);
+    gen.genererTuile(&tuile4, MMaze::TUILECLASSIQUE);
+    //tuile4.rotateTuile(1);
+    p.ajouterTuile(&tuile2);
     p.ajouterTuile(&tuile3);
-
-    Tuile tuile4(1,1);
-    gen.genererTuile(&tuile4, TUILECLASSIQUE);
     p.ajouterTuile(&tuile4);
-
     //Site* s = p.worldCoordinatesToSite(0,1);
     //std::cout << "Index: "<<s->index() << std::endl;
     PadPlateau pad = p.toPadPlateau();
     std::cout << pad << std::endl;
-    std::cout << Graphe::fromTuile(&tuile4)<< std::endl;
+    std::cout << Graphe::fromTuile(&tuile)<< std::endl;
   return 0 ;
 }
