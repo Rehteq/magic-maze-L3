@@ -60,13 +60,11 @@ namespace MMaze {
         }
 
         close(tuile);
+        ajoutBoutiques(tuile);
         return tuile;
     }
 
     Tuile* Generateur::initTuileDepart(MMaze::Tuile *tuile) {
-        std::random_device seed;
-        std::mt19937 rd(seed());
-        std::uniform_int_distribution<int> rdGen(1, 4);
         Melangeur<Couleur> couleurs;
         for (int i = 1; i <= 4; ++i) {
             couleurs.inserer((Couleur)i);
@@ -223,12 +221,20 @@ namespace MMaze {
                     tuile->getSite(i)->type = Type::BOUTIQUE;
                     changes += 1;
                 }
-                if(val[4] == 4){
-                    tuile->getSite(i)->type = Type::BOUTIQUE;
-                }
+
             }
         } while (changes != 0);
 
+    }
+
+    void Generateur::ajoutBoutiques(Tuile *tuile){
+        int val[5];
+        for (int i = 0; i < 16; ++i) {
+            possibleDirection(tuile, i, val);
+            if(val[4] == 4){
+                tuile->getSite(i)->type = Type::BOUTIQUE;
+            }
+        }
     }
 
     bool Generateur::ajouterObjectif(Couleur c, Tuile *tuile){

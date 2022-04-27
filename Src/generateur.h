@@ -36,6 +36,7 @@ namespace MMaze {
         Tuile* initTuileClassique(Tuile *tuile);
         int * possibleDirection(Tuile *tuile, int index, int *val);
         void close(Tuile *tuile);
+        void ajoutBoutiques(Tuile *tuile);
 
     };
 }
