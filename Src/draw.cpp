@@ -604,7 +604,7 @@ std::ostream& operator<<(std::ostream& out, const PadPlateau& plateau) {
 
     //dessin du contenu d'une case
     pad.moveto(l+1, c+1) ;
-    pad << txt_colors[site_color] << site_symbols[(int) elt.s.type / 10] << TXT_CLEAR ;
+    pad << txt_colors[site_color] << elt.s.getSymbol() << TXT_CLEAR ;
     
   } ;
 

@@ -62,7 +62,33 @@ PadPlateau Plateau::toPadPlateau() {
             Site site = tuile->vec_sites[j];
             padPlateau.ajouter_site(tuile->y,tuile->x, site);
         }
-        
     }
+    for (int i = 0; i < joueurs.size(); ++i) {
+        Joueur *j = joueurs[i];
+        int l = j->tuile->y*4 + j->site->ligne();
+        int c = j->tuile->x*4 + j->site->colonne();
+        padPlateau.placer_joueur(l,c,*j->site,j->couleur);
+        std::cout<<"joueur "<<i<<" : "<<l<<" "<<c<<std::endl;
+    }
+
     return padPlateau;
+}
+
+Joueur *Plateau::getNextPlayer() {
+    if (currentPlayer == nullptr){
+        return joueurs[0];
+    }
+    int max = joueurs.size();
+
+    //Find index of current player
+    int index = 0;
+    for (int i = 0; i < joueurs.size(); ++i) {
+        Joueur *j = joueurs[i];
+        if (j == currentPlayer){
+            index = i;
+            break;
+        }
+    }
+    int nextIndex = (index + 1) % max;
+    return joueurs[nextIndex];
 }

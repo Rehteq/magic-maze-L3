@@ -9,6 +9,8 @@
 
 using namespace MMaze ;
 
+Plateau p;
+Generateur gen;
 int main() {
     MelangeurOptions::imprevisible();
     /*
@@ -68,26 +70,25 @@ int main() {
   std::cout << cpy << std::endl ;
     */
     Tuile tuile(0,0);
-    Generateur gen;
     gen.genererTuile(&tuile, TUILEDEPART);
-    Plateau p;
     p.ajouterTuile(&tuile);
+    /*
+    Joueur j(Couleur::JAUNE);
+    j.tuile = &tuile;
+    j.site = tuile.getSite(0);
+    p.joueurs.push_back(&j);
+     */
     //std::vector<Tuile> tuiles;
-
+    std::cout << p.toPadPlateau() << std::endl;
     Tuile tuile2(0,1);
     gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
     p.ajouterTuile(&tuile2);
-    std::cout << p.toPadPlateau() << std::endl;
-    for (int i = 0; i < tuile2.vec_murs.size(); ++i) {
-        std::cout <<"Mur("<<i<<"):"<< tuile2.vec_murs[i] << std::endl;
-    }
     tuile2.rotateTuile(-1);
-    p.ajouterTuile(&tuile2);
-    std::cout << p.toPadPlateau() << std::endl;
+
     std::cout << "Après Rotations" << std::endl;
-    for (int i = 0; i < tuile2.vec_murs.size(); ++i) {
-        std::cout <<"Mur("<<i<<"):"<< tuile2.vec_murs[i] << std::endl;
-    }
+    gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile2);
+    std::cout << p.toPadPlateau() << std::endl;
+
     /*
     Tuile tuile3(1,0);
     gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
@@ -112,4 +113,13 @@ int main() {
     g.print_distances(*n);
      */
   return 0 ;
+}
+void handle_input(){
+  int c = getchar();
+  if(c == 'w'){
+
+  }
+}
+void move_player(Couleur c, Direction d){
+
 }

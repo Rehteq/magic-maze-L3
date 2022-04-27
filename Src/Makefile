@@ -28,6 +28,7 @@ SOURCES += tuile.cpp
 SOURCES += plateau.cpp
 SOURCES += generateur.cpp
 SOURCES += graphe.cpp
+SOURCES += Joueur.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
