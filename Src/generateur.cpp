@@ -9,6 +9,7 @@
 #include <cassert>
 #include <random>
 #include <chrono>
+#include <iostream>
 
 namespace MMaze {
 
@@ -244,6 +245,7 @@ namespace MMaze {
         }
         Site objectifSite = Site(random);
         tuile->setType(objectifSite.ligne(), objectifSite.colonne(), OBJECTIF);
+        std::cout << "Objectif ajouté en " << "Tuile : " << tuile->x << "," << tuile->y << " Case : "<<objectifSite.index() << std::endl;
         objectifSite.couleur = c;
         objectifs[((int)c)-1] = true;
         return true;
