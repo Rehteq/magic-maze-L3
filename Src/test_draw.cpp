@@ -86,6 +86,13 @@ int main() {
     //std::cout << "Index: "<<s->index() << std::endl;
     PadPlateau pad = p.toPadPlateau();
     std::cout << pad << std::endl;
-    std::cout << Graphe::fromTuile(&tuile4)<< std::endl;
+
+    //Dessins d'un graphe et voisins
+    Graphe g = Graphe::fromTuile(&tuile4);
+    std::cout << g << std::endl;
+
+    //Dessins du résultat de Dijkstra
+    node *n = g.find_noeud(&tuile4, tuile4.getSite(0,0));
+    g.print_distances(*n);
   return 0 ;
 }
