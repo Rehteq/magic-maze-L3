@@ -10,7 +10,7 @@
 using namespace MMaze ;
 
 int main() {
-    //MelangeurOptions::imprevisible();
+    MelangeurOptions::imprevisible();
     /*
   PadPlateau pad ;
   

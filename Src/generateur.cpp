@@ -67,18 +67,18 @@ namespace MMaze {
         std::random_device seed;
         std::mt19937 rd(seed());
         std::uniform_int_distribution<int> rdGen(1, 4);
-        //Melangeur<Couleur> couleurs;
-        //for (int i = 1; i <= 4; ++i) {
-        //    couleurs.inserer((Couleur)i);
-        //}
+        Melangeur<Couleur> couleurs;
+        for (int i = 1; i <= 4; ++i) {
+            couleurs.inserer((Couleur)i);
+        }
         tuile->setType(1,0, Type::PORTE);
-        tuile->getSite(1,0)->couleur = (Couleur)(rdGen(rd));
+        tuile->getSite(1,0)->couleur = couleurs.retirer();
         tuile->setType(0,2, Type::PORTE);
-        tuile->getSite(0,2)->couleur = (Couleur)(rdGen(rd));
+        tuile->getSite(0,2)->couleur = couleurs.retirer();
         tuile->setType(2,3, Type::PORTE);
-        tuile->getSite(2,3)->couleur = (Couleur)(rdGen(rd));
+        tuile->getSite(2,3)->couleur = couleurs.retirer();
         tuile->setType(3,1, Type::PORTE);
-        tuile->getSite(3,1)->couleur = (Couleur)(rdGen(rd));
+        tuile->getSite(3,1)->couleur = couleurs.retirer();
         m_union = std::vector<int>();
         for (int i = 0; i < 16; ++i) {
             m_union.push_back(i);
@@ -103,23 +103,22 @@ namespace MMaze {
         std::random_device seed;
         std::mt19937 rd(seed());
         std::uniform_int_distribution<int> rdGen(0, 3);
-        //Melangeur<Couleur> couleurs;
-        //for (int i = 1; i <= 4; ++i) {
-        //    couleurs.inserer((Couleur)i);
-        //}
-
+        Melangeur<Couleur> couleurs;
+        for (int i = 1; i <= 4; ++i) {
+            couleurs.inserer((Couleur)i);
+        }
         for(int i = 0; i < 4; i++){
             switch(rdGen(rd)){
                 case 0:
-                    tuile->getSite(1,0)->couleur = (Couleur)(rdGen(rd)+1);
+                    tuile->getSite(1,0)->couleur = couleurs.retirer();
                     tuile->setType(1,0, Type::PORTE);
                     break;
                 case 1:
-                    tuile->getSite(0,2)->couleur = (Couleur)(rdGen(rd)+1);
+                    tuile->getSite(0,2)->couleur = couleurs.retirer();
                     tuile->setType(0,2, Type::PORTE);
                     break;
                 case 2:
-                    tuile->getSite(2,3)->couleur = (Couleur)(rdGen(rd)+1);
+                    tuile->getSite(2,3)->couleur = couleurs.retirer();
                     tuile->setType(2,3, Type::PORTE);
                     break;
             }
@@ -221,7 +220,7 @@ namespace MMaze {
                 toClose = missingWall(tuile, i, val);
                 if(toClose != -1 && tuile->getSite(i)->type == Type::AUCUN){
                     tuile->setMur(toClose, true);
-                    //tuile->getSite(i)->type = Type::BOUTIQUE;
+                    tuile->getSite(i)->type = Type::BOUTIQUE;
                     changes += 1;
                 }
                 if(val[4] == 4){
@@ -246,7 +245,7 @@ namespace MMaze {
         Site objectifSite = Site(random);
         tuile->setType(objectifSite.ligne(), objectifSite.colonne(), OBJECTIF);
         std::cout << "Objectif ajouté en " << "Tuile : " << tuile->x << "," << tuile->y << " Case : "<<objectifSite.index() << std::endl;
-        objectifSite.couleur = c;
+        tuile->getSite(random)->couleur = c;
         objectifs[((int)c)-1] = true;
         return true;
     }
