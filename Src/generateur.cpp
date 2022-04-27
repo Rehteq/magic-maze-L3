@@ -215,8 +215,8 @@ namespace MMaze {
         int toClose;
         int val[5];
         do{
-            changes = 0;
             for(int i = 0; i < 16; i++){
+                changes = 0;
                 toClose = missingWall(tuile, i, val);
                 if(toClose != -1 && tuile->getSite(i)->type == Type::AUCUN){
                     tuile->setMur(toClose, true);
