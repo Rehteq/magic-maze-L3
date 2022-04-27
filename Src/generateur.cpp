@@ -90,6 +90,11 @@ namespace MMaze {
         tuile->setMur(6,false);
         tuile->setMur(17, false);
         tuile->setMur(18, false);
+
+        for (int i = 0; i < 4; ++i) {
+            objectifs.push_back(false);
+        }
+
         return tuile;
     }
 
@@ -227,7 +232,7 @@ namespace MMaze {
     }
 
     bool Generateur::ajouterObjectif(Couleur c, Tuile *tuile){
-        if(objectifs[(int)c]){
+        if(objectifs[((int)c)-1]){
             return false;
         }
         std::random_device seed;
@@ -240,15 +245,15 @@ namespace MMaze {
         Site objectifSite = Site(random);
         tuile->setType(objectifSite.ligne(), objectifSite.colonne(), OBJECTIF);
         objectifSite.couleur = c;
-        objectifs[(int)c] = true;
+        objectifs[((int)c)-1] = true;
         return true;
     }
 
     bool Generateur::retirerObjectif(Site site){
-        if(!objectifs[(int)site.couleur] || site.type != OBJECTIF){
+        if(!objectifs[((int)site.couleur)-1] || site.type != OBJECTIF){
             return false;
         }
-        objectifs[(int)site.couleur] = false;
+        objectifs[((int)site.couleur)-1] = false;
         site.couleur = Couleur::AUCUNE;
         site.type = AUCUN;
         return true;

@@ -78,10 +78,10 @@ int main() {
     gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
     Tuile tuile3(1,0);
     gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
-    //gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile3);
     Tuile tuile4(2,2);
     gen.genererTuile(&tuile4, MMaze::TUILECLASSIQUE);
-    //tuile4.rotateTuile(1);
+    gen.ajouterObjectif(MMaze::Couleur::VIOLET, &tuile4);
+    tuile4.rotateTuile(2);
     p.ajouterTuile(&tuile2);
     p.ajouterTuile(&tuile3);
     p.ajouterTuile(&tuile4);

@@ -69,9 +69,9 @@ namespace MMaze{
             vec_murs_tmp.push_back(vec_murs[tmp_mur.index()]);
         }
         //vec_murs = vec_murs_tmp;
-        //for (int i = 0; i < vec_murs.size(); ++i) {
-        //    vec_murs[i] = vec_murs_tmp[i];
-        //}
+        for (int i = 0; i < vec_murs.size(); ++i) {
+            vec_murs[i] = vec_murs_tmp[i];
+        }
 
         std::vector<Site> vec_sites_tmp;
         for (int i = 0; i < vec_sites.size(); ++i) {
@@ -80,9 +80,9 @@ namespace MMaze{
             vec_sites_tmp.push_back(vec_sites[tmp_site.index()]);
         }
         //vec_sites = vec_sites_tmp;
-        //for (int i = 0; i < vec_sites.size(); ++i) {
-        //    vec_sites[i] = vec_sites_tmp[i];
-        //}
+        for (int i = 0; i < vec_sites.size(); ++i) {
+            vec_sites[i] = vec_sites_tmp[i];
+        }
 
     }
 
