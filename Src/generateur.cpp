@@ -61,6 +61,19 @@ namespace MMaze {
 
         close(tuile);
         ajoutBoutiques(tuile);
+        if(tuileType == TUILECLASSIQUE){
+            std::random_device seed;
+            std::mt19937 rd(seed());
+            std::uniform_int_distribution<int> rdGen(0, 3);//25% de chance de lancer la function ajoutObjectif
+            int tauxSortie = rdGen(rd);
+            int tauxObjectif = rdGen(rd);
+            if(tauxSortie == 0){
+                ajouterObjectif((Couleur)(rdGen(rd)+1), tuile);//si objectif deja existant, n'apparait pas.
+            }
+            if(tauxObjectif == 0){
+                ajouterSortie((Couleur)(rdGen(rd)+1), tuile);//si sortie deja existant, n'apparait pas.
+            }
+        }
         return tuile;
     }
 
@@ -92,6 +105,9 @@ namespace MMaze {
 
         for (int i = 0; i < 4; ++i) {
             objectifs.push_back(false);
+        }
+        for (int i = 0; i < 4; ++i) {
+            sorties.push_back(false);
         }
 
         return tuile;
@@ -251,6 +267,25 @@ namespace MMaze {
         objectifs[((int)site.couleur)-1] = false;
         site.couleur = Couleur::AUCUNE;
         site.type = AUCUN;
+        return true;
+    }
+
+    bool Generateur::ajouterSortie(Couleur c, Tuile *tuile){
+        if(sorties[((int)c)-1]){
+            return false;
+        }
+        std::random_device seed;
+        std::mt19937 rd(seed());
+        std::uniform_int_distribution<int> rdGen(0, 15);
+        int random = rdGen(rd);
+        while(tuile->getSite(random)->type != Type::AUCUN){
+            random = rdGen(rd);
+        }
+        Site sortieSite = Site(random);
+        tuile->setType(sortieSite.ligne(), sortieSite.colonne(), SORTIE);
+        std::cout << "Sortie ajouté en " << "Tuile : " << tuile->x << "," << tuile->y << " Case : "<<sortieSite.index() << std::endl;
+        tuile->getSite(random)->couleur = c;
+        sorties[((int)c)-1] = true;
         return true;
     }
 
