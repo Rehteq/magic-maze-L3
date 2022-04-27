@@ -74,16 +74,18 @@ namespace MMaze{
         }
 
         std::vector<Site> vec_sites_tmp;
+        vec_sites_tmp.reserve(vec_sites.size());
         for (int i = 0; i < vec_sites.size(); ++i) {
-            Case c(i);
-            Case tmp_site = c.tourne(rotation);
-            vec_sites_tmp.push_back(vec_sites[tmp_site.index()]);
+            Site s = vec_sites[i];
+            Site tmp_site(s.tourne(rotation).index());
+            tmp_site.couleur = s.couleur;
+            tmp_site.type = s.type;
+            vec_sites_tmp[tmp_site.index()] = tmp_site;
         }
         //vec_sites = vec_sites_tmp;
         for (int i = 0; i < vec_sites.size(); ++i) {
             vec_sites[i] = vec_sites_tmp[i];
         }
-
     }
 
 
