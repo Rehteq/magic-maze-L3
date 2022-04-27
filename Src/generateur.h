@@ -24,12 +24,11 @@ namespace MMaze {
 
         bool join(int elem1, int elem2);
 
-        bool ajouterObjectif(Couleur c, Tuile *tuile);
 
-        bool retirerObjectif(Site site);
         
     private:
         std::vector<bool> objectifs;
+        std::vector<bool> sorties;
         std::vector<int> m_union;
         int missingWall(Tuile *tuile, int index, int *val);
         Tuile* initTuileDepart(Tuile *tuile);
@@ -37,6 +36,9 @@ namespace MMaze {
         int * possibleDirection(Tuile *tuile, int index, int *val);
         void close(Tuile *tuile);
         void ajoutBoutiques(Tuile *tuile);
+        bool ajouterObjectif(Couleur c, Tuile *tuile);
+        bool retirerObjectif(Site site);
+        bool ajouterSortie(Couleur c, Tuile *tuile);
 
     };
 }
