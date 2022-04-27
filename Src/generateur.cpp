@@ -190,18 +190,7 @@ namespace MMaze {
         if(val[4] == 3){
             for(int i = 0; i < 4; i++){
                 if(val[i] == -1){
-                    if(i == 2){
-                        return index-4;
-                    }
-                    if(i == 0){
-                        return index+4;
-                    }
-                    if(i == 3){
-                        return c.ligne()+12+(4*(index-(c.ligne()*4)-1));
-                    }
-                    if(i == 1){
-                        return c.ligne()+12+(4*(index-(c.ligne()*4)));
-                    }
+                    return Mur(c, c.voisine((Direction)i)).index();
                 }
             }
         }
@@ -218,7 +207,6 @@ namespace MMaze {
                 toClose = missingWall(tuile, i, val);
                 if(toClose != -1 && tuile->getSite(i)->type == Type::AUCUN){
                     tuile->setMur(toClose, true);
-                    tuile->getSite(i)->type = Type::BOUTIQUE;
                     changes += 1;
                 }
 
