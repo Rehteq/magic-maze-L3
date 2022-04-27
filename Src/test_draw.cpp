@@ -76,6 +76,19 @@ int main() {
 
     Tuile tuile2(0,1);
     gen.genererTuile(&tuile2, MMaze::TUILECLASSIQUE);
+    p.ajouterTuile(&tuile2);
+    std::cout << p.toPadPlateau() << std::endl;
+    for (int i = 0; i < tuile2.vec_murs.size(); ++i) {
+        std::cout <<"Mur("<<i<<"):"<< tuile2.vec_murs[i] << std::endl;
+    }
+    tuile2.rotateTuile(-1);
+    p.ajouterTuile(&tuile2);
+    std::cout << p.toPadPlateau() << std::endl;
+    std::cout << "Après Rotations" << std::endl;
+    for (int i = 0; i < tuile2.vec_murs.size(); ++i) {
+        std::cout <<"Mur("<<i<<"):"<< tuile2.vec_murs[i] << std::endl;
+    }
+    /*
     Tuile tuile3(1,0);
     gen.genererTuile(&tuile3, MMaze::TUILECLASSIQUE);
     Tuile tuile4(2,2);
@@ -97,5 +110,6 @@ int main() {
     //Dessins du résultat de Dijkstra
     node *n = g.find_noeud(&tuile4, tuile4.getSite(0,0));
     g.print_distances(*n);
+     */
   return 0 ;
 }

@@ -63,10 +63,12 @@ namespace MMaze{
 
     void Tuile::rotateTuile(int rotation){
         std::vector<bool> vec_murs_tmp;
+        vec_murs_tmp.reserve(24);
         for (int i = 0; i < vec_murs.size(); ++i) {
             Mur m(i);
+            bool isSolid = vec_murs[i];
             Mur tmp_mur = m.tourne(rotation);
-            vec_murs_tmp.push_back(vec_murs[tmp_mur.index()]);
+            vec_murs_tmp[tmp_mur.index()] = isSolid;
         }
         //vec_murs = vec_murs_tmp;
         for (int i = 0; i < vec_murs.size(); ++i) {

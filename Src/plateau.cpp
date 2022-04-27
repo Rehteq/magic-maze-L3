@@ -26,15 +26,22 @@ Tuile* Plateau::getTuile(int y, int x) {
     Tuile * tuile;
     for (auto & vec_tuile : vec_tuiles) {
         if (vec_tuile->x == x && vec_tuile->y == y) {
-            tuile = vec_tuile;
+             return vec_tuile;
         }
     }
-    assert(tuile != nullptr); // tuile non trouvée
-    return tuile;
+     // tuile non trouvée
+    return nullptr;
 }
 
 void Plateau::ajouterTuile(Tuile* t) {
-    vec_tuiles.push_back(t);
+    //If the tuile is not already on the plateau
+    Tuile *target = getTuile(t->y, t->x);
+    if (target == nullptr) {
+        vec_tuiles.push_back(t);
+    } else{
+        //If the tuile is already on the plateau replace it
+        target = t;
+    }
 }
 
 Plateau::Plateau() {

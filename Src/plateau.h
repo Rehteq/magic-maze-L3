@@ -20,7 +20,6 @@ public:
     PadPlateau toPadPlateau();
 private:
     std::vector<Tuile*> vec_tuiles;
-
 };
 
 
